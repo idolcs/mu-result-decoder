@@ -5,27 +5,30 @@ const regexout = document.getElementById("regexout");
 
 let regexp;
 
-regexin.addEventListener("change", () => {
-  let inp = regexin.value;
-
+const strToRegex = (inp) => {
+  // console.log("strToRegex called with inp: ", inp);
   let out = "";
-
   let currentStr = "";
   let variableOpen = false;
   let literalOpen = false;
+  let matchAnyOpen = false;
   for (let i = 0; i < inp.length; i++) {
-    if (!variableOpen && !literalOpen) {
+    if (!variableOpen && !literalOpen && !matchAnyOpen) {
       if (inp[i] == " ") {
         out += "\\s";
       } else if (inp[i] == "|") {
         out += "\\|";
       } else if (inp[i] == "/") {
         out += "\\/";
+      }else if (inp[i] == "-") {
+        out += "\\-";
       } else if (inp[i] == "`") {
         variableOpen = true;
       } else if (inp[i] == "^") {
         literalOpen = true;
-      }
+      } else if (inp[i] == "$") {
+        matchAnyOpen = true;
+      } 
     } else {
       if (inp[i] == "`") {
         variableOpen = false;
@@ -34,8 +37,11 @@ regexin.addEventListener("change", () => {
         currentStr = "";
       } else if (inp[i] == "^") {
         literalOpen = false;
-        out += "(" + currentStr + ")";
+        out += "(" + currentStr.replaceAll("|", "\\|").replaceAll("/", "\\/").replaceAll("-", "\\-") + ")";
         currentStr = "";
+      } else if (inp[i] == "$") {
+        matchAnyOpen = false;
+        out += "(.+)"
       } else {
         currentStr += inp[i];
       }
@@ -43,10 +49,10 @@ regexin.addEventListener("change", () => {
   }
 
   out += "";
-  regexout.innerText = out;
-  regexp = new RegExp(out, "g");
-  console.log(regexp);
-});
+  regexp = out;
+  // console.log("strToRegex output: ", String(regexp));
+  return String(regexp);
+};
 
 const textToRegex = (input) => {
   if (input.match(/^\d$/)) {
@@ -59,15 +65,15 @@ const textToRegex = (input) => {
     return "([A-Z\\s]+)";
   } else if (input.match(/^[a-z]+$/)) {
     return "([a-z]+)";
-  }else if (input.match(/^[a-z\s]+$/)) {
+  } else if (input.match(/^[a-z\s]+$/)) {
     return "([a-z\\s]+)";
   } else if (input.match(/^([A-Za-z]+)$/)) {
     return "([A-Za-z]+)";
-  }else if (input.match(/^([A-Za-z\s]+)$/)) {
+  } else if (input.match(/^([A-Za-z\s]+)$/)) {
     return "([A-Za-z\\s]+)";
   } else if (input.match(/^([A-Za-z\d]+)$/)) {
     return "([A-Za-z\\d]+)";
-  }else if (input.match(/^([A-Za-z\d\s]+)$/)) {
+  } else if (input.match(/^([A-Za-z\d\s]+)$/)) {
     return "([A-Za-z\\d\\s]+)";
   } else if (input.match(/^\w+$/)) {
     return "(\\w+)";
@@ -75,3 +81,5 @@ const textToRegex = (input) => {
     return "([\\w+]+)";
   }
 };
+
+export { strToRegex };
