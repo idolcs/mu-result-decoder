@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { txtToString } from "../../utils/txtreader";
-import { addPDFInput, setPrettyPDF } from "../../slices/pdfSlice";
+import { addPDFInput } from "../../slices/pdfSlice";
 import { useDispatch, useSelector } from "react-redux";
+import PdfInputPreview from "./PdfInputPreview/PdfInputPreview";
 
 const PdfInput = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,6 @@ const PdfInput = () => {
     try {
       const rtnData = await txtToString(e.target.files[0]);
       dispatch(addPDFInput(rtnData));
-      dispatch(setPrettyPDF("loading..."));
     } catch (err) {
       console.error(err);
     }
@@ -21,7 +21,6 @@ const PdfInput = () => {
   useEffect(() => {
     // console.log(pdfObj);
     const pretty = txtContentsPrettify(pdfObj.input);
-    dispatch(setPrettyPDF(pretty));
   }, [pdfObj.input]);
 
   const txtContentsPrettify = (array) => {
@@ -64,16 +63,14 @@ const PdfInput = () => {
             />
           </svg>
           Upload file
-          <input type="file" id="uploadFile1" onInput={(e) => handleFile(e)} class="hidden"  />
-          <p class="text-xs text-gray-400 mt-2">
+          <input type="file" id="uploadFile1" onInput={(e) => handleFile(e)} className="hidden"  />
+          <p className="text-xs text-gray-400 mt-2">
             Only TXT files
           </p>
         </label>
       </div>
 
-      <div className="p-5 mt-5 rounded-md bg-purple-300 border-2 border-black shadow-1">
-        <p>{pdfObj.pretty}</p>
-      </div>
+      <PdfInputPreview />
     </>
   );
 };

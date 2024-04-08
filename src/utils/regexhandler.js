@@ -42,6 +42,7 @@ const strToRegex = (inp) => {
       } else if (inp[i] == "$") {
         matchAnyOpen = false;
         out += "(.+)"
+        currentStr = "";
       } else {
         currentStr += inp[i];
       }

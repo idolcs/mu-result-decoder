@@ -1,26 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    input: [],
-    pretty: []
-}
+  input: [],
+  count: 0
+};
 
 const addPDFInputFun = (state, action) => {
-    state.input = action.payload;
-}
+  state.input = action.payload;
+  state.count = state.count + 1
+};
 
-const setPrettyPDFFun = (state, action) => {
-    state.pretty = action.payload;
-}
+const modifyPDFInputFun = (state, action) => {
+  state.input = action.payload;
+};
+
 
 const pdfSlice = createSlice({
-    name: "pdf",
-    initialState, 
-    reducers: {
-        addPDFInput: addPDFInputFun,
-        setPrettyPDF : setPrettyPDFFun
-    }
-})
+  name: "pdf",
+  initialState,
+  reducers: {
+    addPDFInput: addPDFInputFun,
+    modifyPDFInput : modifyPDFInputFun
+  },
+});
 
-export const { addPDFInput, setPrettyPDF } = pdfSlice.actions;
+export const { addPDFInput, modifyPDFInput } = pdfSlice.actions;
 export default pdfSlice.reducer;
