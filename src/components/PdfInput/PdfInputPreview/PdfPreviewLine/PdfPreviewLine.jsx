@@ -22,7 +22,7 @@ const PdfPreviewLine = (props) => {
         <>
             <div className="p-2 border-2 border-black rounded mb-2 flex">
                 <button onClick={() => { toggleButton() }} className={`px-2 w-8 h-full ${isActive ? "bg-green-300" : "bg-white"} mr-4 rounded border-2 border-black shadow-1 shadow-1-active`}>{isActive ? "✓" : "+"}</button>
-                <p>{props.data}</p>
+                <pre>{props.data}</pre>
             </div>
         </>
     )
