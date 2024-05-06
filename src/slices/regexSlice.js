@@ -7,7 +7,12 @@ const initialState = {
   output: [],
   variables: [],
   matches: {},
+  divider: "",
 };
+
+const setDividerFun = (state, action) => {
+  state.divider = action.payload;
+}
 
 const setRegexInputFun = (state, action) => {
   let id = 1;
@@ -115,7 +120,8 @@ const regexSlice = createSlice({
     removeRegexInput: removeRegexInputFun,
     updateRegexInput: updateRegexInputFun,
     setRegexVariableState: setRegexVariableStateFun,
-    setRegexVariableAlias: setRegexVariableAliasFun
+    setRegexVariableAlias: setRegexVariableAliasFun,
+    setDivider : setDividerFun
   },
 });
 
@@ -127,6 +133,7 @@ export const {
   removeRegexInput,
   updateRegexInput,
   setRegexVariableState,
-  setRegexVariableAlias
+  setRegexVariableAlias,
+  setDivider
 } = regexSlice.actions;
 export default regexSlice.reducer;

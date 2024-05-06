@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import PdfInput from "./components/PdfInput/PdfInput";
 import PrettyOutput from "./components/PrettyOutput/PrettyOutput";
 import RegexInput from "./components/RegexInput/RegexInput";
+import Divider from "./components/Divider/Divider";
 
 function App() {
 
@@ -15,6 +16,9 @@ function App() {
         </p>
       </div>
     <div className="w-full flex flex-col items-center">
+      <div className="p-5 w-full max-w-[1200px]">
+        <Divider />
+      </div>
       <div className="p-5 w-full max-w-[1200px]">
         <PdfInput />
       </div>

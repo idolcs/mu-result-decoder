@@ -8,10 +8,17 @@ const PdfInput = () => {
   const dispatch = useDispatch();
 
   const pdfObj = useSelector((state) => state.pdf);
+  const divider = useSelector(state => state.regex.divider);
+
+  let enableUpload = false;
+
+  if(divider){
+    enableUpload = true;
+  }
 
   async function handleFile(e) {
     try {
-      const rtnData = await txtToString(e.target.files[0]);
+      const rtnData = await txtToString(e.target.files[0], divider);
       dispatch(addPDFInput(rtnData));
     } catch (err) {
       console.error(err);
@@ -43,7 +50,7 @@ const PdfInput = () => {
 
   return (
     <>
-      <div className="rounded-md">
+      <div className={`rounded-md ${enableUpload ? "" : "hidden"}`}>
         <label
           htmlFor="uploadFile1"
           className="bg-white text-black text-base rounded w-full h-52 flex flex-col items-center justify-center cursor-pointer border-black border-2 shadow-2"

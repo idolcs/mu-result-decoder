@@ -12,7 +12,8 @@ const PdfInputPreview = () => {
   useEffect(() => {
     // const whitespaceRemoved = pdfObj.input.map(str => str.replace(/\//g, "").replace(/\+/g, "+ ").replace(/\s+/g, ' ').trim())
     console.warn("Removed everything!");
-    const whitespaceRemoved = pdfObj.input.map(str => str.replace(/\//g, "").replace(/\|/g, " | ").replace(/\+/g, "+ ").replace(/\s+/g, ' ').trim())
+    // const whitespaceRemoved = pdfObj.input.map(str => str.replace(/\//g, "").replace(/\|/g, " | ").replace(/\+/g, "+ ").replace(/\s+/g, ' ').trim())
+    const whitespaceRemoved = pdfObj.input.map(str => str.replace(/\//g, "").replace(/\|/g, " | ").replace(/\+/g, "+ ").replace(/\r/g, ""));
     dispatch(modifyPDFInput(whitespaceRemoved));
   }, [pdfObj.count])
 
