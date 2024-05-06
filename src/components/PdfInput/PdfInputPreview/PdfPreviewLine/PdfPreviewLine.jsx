@@ -12,7 +12,7 @@ const PdfPreviewLine = (props) => {
         if (!isActive) {
             let regexInputData = props.data.split(/\n/);
             regexInputData.map(d => {
-                if(d != "" && d.match(/([A-Za-z0-9])/)){
+                if(d != ""){
                     dispatch(setRegexInput(d.replace(/\//g, "").replace(/\|/g, " | ").replace(/\+/g, "+ ").replace(/\s+/g, ' ').trim()));
                 }
             })
