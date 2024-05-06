@@ -10,7 +10,13 @@ const PdfPreviewLine = (props) => {
 
     const toggleButton = () => {
         if (!isActive) {
-            dispatch(setRegexInput(props.data));
+            let regexInputData = props.data.split(/\n/);
+            regexInputData.map(d => {
+                if(d != "" && d.match(/([A-Za-z0-9])/)){
+                    dispatch(setRegexInput(d.replace(/\//g, "").replace(/\|/g, " | ").replace(/\+/g, "+ ").replace(/\s+/g, ' ').trim()));
+                }
+            })
+            // console.log(props.data.split(/\n/));
         }else{
             dispatch(removeRegexInput(props.data));
         }
