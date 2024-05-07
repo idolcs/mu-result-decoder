@@ -97,6 +97,14 @@ const Inputs = () => {
     <>
       <div>
         <p>Matches to Make</p>
+        <div className="p-2 text-[0.8em]">
+          <ul>
+            <li>' number</li>
+            <li>` just text without any spaces</li>
+            <li>`` text with spaces in between (should match until an end is hit)</li>
+            <li>$ matches with text, number, - or +</li>
+          </ul>
+        </div>
         <div className="flex flex-col">
           {inputs.map((inp) => {
             return (
