@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const RawTextPreview = () => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const rawText = useSelector((state) => state.text.rawText);
 
@@ -22,7 +22,7 @@ const RawTextPreview = () => {
               : "h-0 overflow-y-hidden"
           }`}
         >
-          <pre>{rawText}</pre>
+          <pre>{expanded ? rawText : ""}</pre>
         </div>
       </div>
     </>

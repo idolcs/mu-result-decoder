@@ -5,7 +5,7 @@ import { setLines } from "../../store/reducers/textSlice";
 const LinesPreview = () => {
   const dispatch = useDispatch();
   const textState = useSelector((state) => state.text);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     let linesLocal = textState.dividedText.map((text) => {
@@ -51,6 +51,37 @@ const LinesPreview = () => {
     dispatch(setLines(linesLocal));
   }, [textState.dividedText]);
 
+  let textBoxes = [];
+
+  if(expanded){
+    textBoxes = textState.lines.map((linesgroup: string[]) => {
+      return (
+        <>
+          <div className="border-2 border-[rgba(0,0,0,0.3)] m-2 p-2">
+            <pre>
+              {linesgroup.map((line) => {
+                return (
+                  <>
+                    <div className={`border-2 border-[rgba(0,0,0,0.3)] m-2 p-2 flex ${line.matches.length > 0 ? "bg-green-200" : ""}`}>
+                      <div className="w-4 mr-2">
+                          <p></p>
+                      </div>
+                      <div>
+                        <p>{line.text}</p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </pre>
+          </div>
+        </>
+      );
+    })
+  }else{
+    textBoxes = [""];
+  }
+
   return (
     <>
       <div className="my-2">
@@ -67,30 +98,7 @@ const LinesPreview = () => {
               : "h-0 overflow-y-hidden"
           }`}
         >
-          {textState.lines.map((linesgroup: string[]) => {
-            return (
-              <>
-                <div className="border-2 border-[rgba(0,0,0,0.3)] m-2 p-2">
-                  <pre>
-                    {linesgroup.map((line) => {
-                      return (
-                        <>
-                          <div className={`border-2 border-[rgba(0,0,0,0.3)] m-2 p-2 flex ${line.matches.length > 0 ? "bg-green-200" : ""}`}>
-                            <div className="w-4 mr-2">
-                                <p></p>
-                            </div>
-                            <div>
-                              <p>{line.text}</p>
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </pre>
-                </div>
-              </>
-            );
-          })}
+          {textBoxes}
         </div>
       </div>
     </>
