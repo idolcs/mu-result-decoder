@@ -1,4 +1,4 @@
-const stringcheck = (text: string, reg : string) => {
+const stringcheck = (text: string, reg : string) : (Boolean | {regexArray : string[], variables : string[]}) => {
     let regArray = regToArray(reg); // coverts the regex string to array of variables and constants
   
     let textArray = textParser(text, regArray);
@@ -134,4 +134,5 @@ const stringcheck = (text: string, reg : string) => {
     return textArray;
   };
 
+  export {regToArray}
   export default stringcheck;

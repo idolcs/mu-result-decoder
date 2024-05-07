@@ -7,6 +7,7 @@ import DividedTextPreview from "./components/DividedTextPreview/DividedTextPrevi
 import LinesPreview from "./components/LinesPreview/LinesPreview.tsx";
 import MatchTiles from "./components/MatchTiles/MatchTiles.tsx";
 import Inputs from "./components/Inputs/Inputs.tsx";
+import MakeCSV from "./components/MakeCSV/MakeCSV.tsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
         </div>
         <div>
           <Inputs />
+        </div>
+        <div>
+          <MakeCSV />
         </div>
       </div>
     </>

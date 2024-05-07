@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRawInput } from "../../store/reducers/inputSlice";
-import stringcheck from "../../functions/stringcheck";
+import { setInputsLengths, setRawInput } from "../../store/reducers/inputSlice";
+import stringcheck, { regToArray } from "../../functions/stringcheck";
 import { setLines } from "../../store/reducers/textSlice";
 
 const Inputs = () => {
@@ -37,6 +37,14 @@ const Inputs = () => {
   };
 
   const makeMatches = () => {
+
+    let regLengths = inputs.map(inp => {
+      let rtn = regToArray(inp.text);
+      return rtn.length;
+    })
+
+    dispatch(setInputsLengths(regLengths));
+
     let localInput = [...inputs];
     dispatch(setRawInput(localInput));
     let localLines = lines.map(line => [...line]);
@@ -54,9 +62,14 @@ const Inputs = () => {
               inputs[inputIndex].text
             )
           ) {
+            let returnedObject : (Boolean | {regexArray : string[], variables : string[]}) = stringcheck(
+              localLines[i][currentLine].text,
+              inputs[inputIndex].text
+            );
             localLines[i][currentLine] = {
               ...localLines[i][currentLine],
-              matches : [inputIndex]
+              matches : [inputIndex],
+              variables : returnedObject.variables
             };
             notMatched = false;
           }
@@ -70,47 +83,6 @@ const Inputs = () => {
     dispatch(setLines(localLines));
     
 };
-
-// let newLocalLines = processLines(localLines, inputs);
-
-// console.log(newLocalLines);
-//   function processLines(localLines, inputs) {
-//     return localLines.map((lines, i) => {
-//       let inputIndex = 0;
-//       let lastMatchedLine = -1;
-//       let updatedLines = lines.map(line => ({ ...line }));
-  
-//       while (inputIndex < inputs.length) {
-//         let notMatched = true;
-//         let currentLine = lastMatchedLine + 1;
-  
-//         while (notMatched && currentLine < updatedLines.length) {
-//           if (
-//             stringcheck(
-//               updatedLines[currentLine].text,
-//               inputs[inputIndex].text
-//             )
-//           ) {
-//             console.log("matched");
-//             let newMatches = [
-//               ...(updatedLines[currentLine].matches || []),
-//               inputIndex
-//             ];
-//             updatedLines[currentLine] = {
-//               ...updatedLines[currentLine],
-//               matches: newMatches
-//             };
-//             notMatched = false;
-//             lastMatchedLine = currentLine;
-//           }
-//           currentLine++;
-//         }
-//         inputIndex++;
-//       }
-//       return updatedLines;
-//     });
-//   }
-  
 
   const addEmptyInput = () => {
     let newInputs = [...inputs];

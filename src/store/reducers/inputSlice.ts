@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     raw : [],
+    lengths: []
 }
 
 const inputSlice = createSlice({
@@ -10,9 +11,12 @@ const inputSlice = createSlice({
     reducers : {
         setRawInput : (state, action) => {
             state.raw = action.payload;
+        },
+        setInputsLengths : (state, action) => {
+            state.lengths = action.payload;
         }
     }
 })
 
-export const {setRawInput} = inputSlice.actions;
+export const {setRawInput, setInputsLengths} = inputSlice.actions;
 export default inputSlice.reducer;
